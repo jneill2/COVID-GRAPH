@@ -1,4 +1,4 @@
-const stateArray =[
+const stateArray = [
     {state:"Alabama", abbreviation: "AL"},
     {state:"Alaska", abbreviation: "AK"},
     {state:"Arizona", abbreviation: "AZ"},
@@ -50,9 +50,19 @@ const stateArray =[
     {state:"Wisconsin", abbreviation: "WI"},
     {state:"Wyoming", abbreviation: "WY"},
 ]
+const filterArray = [
+    {filter:'positive', name:'Total Positive'},
+    {filter:'positiveIncrease', name:'Positive Increase From Previous Day'},
+    {filter:'death', name:'Total Deaths'},
+    {filter:'deathIncrease', name:'Total Death Increase From Previous Day'}
+]
 stateArray.forEach(x => {
     const option = `<option value=${x.abbreviation}>${x.state}</option>`
-    document.querySelector('select').innerHTML += option
+    document.querySelector('#selectState').innerHTML += option
+})
+filterArray.forEach(x => {
+    const option = `<option value=${x.filter}>${x.name}</option>`
+    document.querySelector('#selectFilter').innerHTML += option
 })
 
 var covidData;
@@ -61,7 +71,8 @@ localStorage.stateName ? localStorage.stateName : localStorage.stateName="PA";
 // localStorage.filterName ? localStorage.filterName : localStorage.filterName="positive";
 var filterName = "positive"
 
-document.querySelector('select').value = localStorage.stateName;
+document.querySelector('#selectState').value = localStorage.stateName;
+document.querySelector('#selectFilter').value = filterName;
 
 
 const getLargest = (set) => {
@@ -81,9 +92,15 @@ function fetchData(state) {
     })
 }
 
-document.querySelector("select").onchange = (e) => {
+document.querySelector("#selectState").onchange = (e) => {
     let abr = localStorage.stateName = e.target.value;
     fetchData(abr)
+}
+
+document.querySelector("#selectFilter").onchange = (e) => {
+    console.log(e)
+    document.querySelector("#filter").innerHTML = e.target.selectedOptions[0].label
+    buildGraph(e.target.value)
 }
 
 document.querySelectorAll("button").forEach(button => {

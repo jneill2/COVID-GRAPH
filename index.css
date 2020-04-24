@@ -50,3 +50,13 @@ h2 {
 #footer a {
     color: springgreen;
 }
+@media (pointer: none), (pointer: coarse) {
+    #heading button {
+        display: none;
+    }
+}
+@media (pointer: fine) {
+    #heading #selectFilter {
+        display: none;
+    }
+}
