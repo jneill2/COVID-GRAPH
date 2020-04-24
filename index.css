@@ -40,3 +40,13 @@ h2 {
     background-color: blue;
     vertical-align: middle;
 }
+#footer {
+    text-align: center;
+    color: whitesmoke;
+    background-color: blueviolet;
+    padding: 10px;
+    margin: 10px;
+}
+#footer a {
+    color: springgreen;
+}
