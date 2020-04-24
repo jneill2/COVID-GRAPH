@@ -1,0 +1,42 @@
+#heading {
+    position: fixed;
+    top:0px;
+    left:0px;
+    width: 100%;
+    padding: 10px;
+    background-color: blueviolet;
+}
+button, select {
+    margin: 3px;
+    background-color: whitesmoke;
+}
+#heading span {
+    color: whitesmoke;
+}
+h2 {
+    padding: 90px 50px 10px 50px;
+}
+@media (max-width:999px) {
+    #chart {
+        width:100%;
+        margin: 5px;
+    }
+}
+@media (min-width:1000px) {
+    #chart {
+        width:75%;
+        margin: auto auto;
+    }
+}
+#chart span {
+    display: inline-block;
+    margin: 0 3 5 0;
+    min-width:40px;
+}
+#chart div.bar {
+    margin-left: 10px;
+    display: inline-block;
+    height: 3px;
+    background-color: blue;
+    vertical-align: middle;
+}

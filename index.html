@@ -1,0 +1,24 @@
+<html>
+
+<head>
+    <title>COVID-19</title>
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui"
+        charset="utf-8">
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <div id="heading">
+        <span>COVID-19</span>
+        <select></select>
+        <button data-filter=positive>Total Positive</button>
+        <button data-filter=positiveIncrease>Positive Increase Per Day</button>
+        <button data-filter=death>Total Deaths</button>
+        <button data-filter=deathIncrease>Total Death Increase Per Day</button>
+    </div>
+    <h2 id="filter">Total Positive</h2>
+    <div id="chart"></div>
+</body>
+<script src="index.js"></script>
+</html>
