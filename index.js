@@ -57,11 +57,20 @@ stateArray.forEach(x => {
 
 var covidData;
 
-var stateName = localStorage.stateName ? localStorage.stateName : "PA";
-var filterName = localStorage.filterName ? localStorage.filterName : "positive";
-document.querySelector('select').value = stateName;
+localStorage.stateName ? localStorage.stateName : localStorage.stateName="PA";
+// localStorage.filterName ? localStorage.filterName : localStorage.filterName="positive";
+var filterName = "positive"
 
-fetchData(stateName)
+document.querySelector('select').value = localStorage.stateName;
+
+
+const getLargest = (set) => {
+    let arr = []
+    covidData.forEach(day => { if (!isNaN(day[set])) arr.push(day[set]) })
+    return Math.max.apply(Math, arr)
+}
+
+fetchData(localStorage.stateName)
 function fetchData(state) {
     fetch(`https://covidtracking.com/api/states/daily?state=${state}`).then(res => res.json()).then((data) => {
         return data
@@ -80,7 +89,6 @@ document.querySelector("select").onchange = (e) => {
 document.querySelectorAll("button").forEach(button => {
     button.onclick = (e) => {
         document.querySelector("#filter").innerHTML = e.target.innerHTML;
-        localStorage.filterName = e.target.dataset.filter
         buildGraph(e.target.dataset.filter)
     }
 })
@@ -90,10 +98,12 @@ window.addEventListener('resize', () => {
 })
 
 function buildGraph(set) {
+    filterName = set;
     var largest = getLargest(set);
     var width = document.querySelector("#chart").clientWidth - 150;
     var html = "<b><span>Date</span>–––– <span>Totals</span></b>"
     covidData.map(day => {
+        console.log(day)
         if (isNaN(day[set])) day[set] = ''
         const bar = `
         <div>
@@ -104,12 +114,4 @@ function buildGraph(set) {
         html += bar
     })
     document.querySelector("#chart").innerHTML = html
-}
-
-function getLargest(set) {
-    let arr = []
-    covidData.forEach(day => {
-        if (day[set] != undefined) arr.push(day[set])
-    })
-    return Math.max.apply(Math, arr)
 }
