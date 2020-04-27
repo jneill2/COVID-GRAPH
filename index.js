@@ -148,7 +148,6 @@ fetch(`https://covidtracking.com/api/v1/states/current.json`).then(res => res.js
 })
 
 function fetchData(state) {
-    stateInfo[state].data.forEach(day => day.current = day.positive - day.recovered - day.death)
     covidData = stateInfo[state].data
     buildGraph(filterName)
 }
@@ -158,19 +157,16 @@ fetch(`https://datausa.io/api/data?drilldowns=State&measures=Population&year=lat
         if (stateMapping[state.State]) stateMapping[state.State].population = state.Population
     })
 })
-function fetchPopulations() {
-}
 
-/* in work */
-function fetchEachStates(state) {
-    return fetch(`https://covidtracking.com/api/states/daily?state=${state}`).then(res => res.json()).then((data) => {
-        stateInfo[state].data = data;
-        return data
-    })
-}
+
 fetch(`https://covidtracking.com/api/states/daily`).then(res => res.json()).then((data) => {
     data.forEach(item => {
         if (stateInfo[item.state]) stateInfo[item.state].data.push(item)
+    })
+    Object.keys(stateInfo).forEach(state => {
+        stateInfo[state].data.forEach(day => {
+            day.current = day.positive - day.death - day.recovered
+        })
     })
     fetchData(localStorage.stateName)
 })
@@ -195,6 +191,7 @@ document.querySelector("#selectFilter").onchange = (e) => {
 }
 
 window.addEventListener('resize', () => {
+    if (!covidData) return
     if (document.querySelector("#selectState").value == 'top-ten') {
         filterStates(filterName)
     } else {
@@ -231,26 +228,33 @@ function filterStates(filter) {
     statesInOrder = [];
     var allStates = []
     var largestForEachState = []
+    var recentForEachState = []
     Object.keys(stateInfo).forEach(state => {
+        // console.log(stateInfo[state].data, state)
         allStates.push(state)
         let arr = stateInfo[state].data;
         let lg = getLargest(arr, filterName);
         lg = lg / stateInfo[state].population * 1000000
         largestForEachState.push(lg)
+
+        let recent = stateInfo[state].data[0][filterName];
+        let number = recent / stateInfo[state].population * 1000000
+        recentForEachState.push(number)
     })
     var largest = Math.max.apply(Math, largestForEachState)
     while (statesInOrder.length < 10) {
-        let largest = Math.max.apply(Math, largestForEachState)
-        let index = largestForEachState.indexOf(largest)
+        let largest = Math.max.apply(Math, recentForEachState)
+        let index = recentForEachState.indexOf(largest)
         statesInOrder.push(allStates[index])
         allStates.splice(index,1)
-        largestForEachState.splice(index,1)
+        recentForEachState.splice(index,1)
+        console.log(statesInOrder)
     }
     topTenGraph(largest)
 }
 
 function topTenGraph(largest) {
-    document.querySelector("#chart").innerHTML = '<p>Top 10 Filtered by Cases / Million</p>'
+    document.querySelector("#chart").innerHTML = '<p>Top 10 Filtered by Current Cases / Million</p>'
     var width = document.querySelector("#chart").clientWidth - 55;
     statesInOrder.forEach(state => {
         var casePerM = getLargest(stateInfo[state].data, filterName) / stateInfo[state].population * 1000000
@@ -259,11 +263,12 @@ function topTenGraph(largest) {
             let cpm = day[filterName] / stateInfo[state].population  * 1000000;
             let totalWidth = width / largest * cpm;
             totalWidth = (totalWidth > 0) ? totalWidth : 0;
+            cpm = (!isNaN(cpm)) ? cpm : 0;
             graph += `<div class="top-ten-bar"><span>${Math.round(cpm)}</span><div style="width:${totalWidth}px"></div></div>`
         })
         const box = `
         <div>
-            <h3>${stateInfo[state].state} – ${Math.round(casePerM)} / million</h3>
+            <h3>${stateInfo[state].state} (cases / million)</h3>
             <div>
                 ${graph}
             </div>
