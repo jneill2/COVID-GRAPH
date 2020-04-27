@@ -14,12 +14,12 @@ button, select {
     color: whitesmoke;
 }
 h2 {
-    padding: 90px 50px 10px 50px;
+    padding: 60px 50px 10px 50px;
 }
 @media (max-width:999px) {
     #chart {
-        width:100%;
-        margin: 5px;
+        width:97%;
+        margin: auto auto;
     }
 }
 @media (min-width:1000px) {
@@ -31,7 +31,7 @@ h2 {
 #chart span {
     display: inline-block;
     margin: 0 3 5 0;
-    min-width:40px;
+    min-width:50px;
 }
 #chart div.bar {
     margin-left: 10px;
@@ -39,6 +39,17 @@ h2 {
     height: 3px;
     background-color: blue;
     vertical-align: middle;
+}
+#chart div.top-ten-bar div {
+    height: 3px;
+    background-color: blue;
+    vertical-align: middle;
+    display: inline-block;
+    /* margin: 8px; */
+}
+#chart div.top-ten-bar span {
+    font-size: x-small;
+    margin: 0px;
 }
 #footer {
     text-align: center;
@@ -50,8 +61,12 @@ h2 {
 #footer a {
     color: springgreen;
 }
-@media (pointer: none), (pointer: coarse) {
-    #heading button {
+#top10 {
+    float: right;
+    margin-right: 30px;
+}
+/* @media (pointer: none), (pointer: coarse) {
+    #heading #buttons button {
         display: none;
     }
 }
@@ -59,4 +74,4 @@ h2 {
     #heading #selectFilter {
         display: none;
     }
-}
+} */

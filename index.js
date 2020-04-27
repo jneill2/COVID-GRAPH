@@ -1,134 +1,274 @@
-const stateArray = [
-    {state:"Alabama", abbreviation: "AL"},
-    {state:"Alaska", abbreviation: "AK"},
-    {state:"Arizona", abbreviation: "AZ"},
-    {state:"Arkansas", abbreviation: "AR"},
-    {state:"California", abbreviation: "CA"},
-    {state:"Colorado", abbreviation: "CO"},
-    {state:"Connecticut", abbreviation: "CT"},
-    {state:"Delaware", abbreviation: "DE"},
-    {state:"Florida", abbreviation: "FL"},
-    {state:"Georgia", abbreviation: "GA"},
-    {state:"Hawaii", abbreviation: "HI"},
-    {state:"Idaho", abbreviation: "ID"},
-    {state:"Illinois", abbreviation: "IL"},
-    {state:"Indiana", abbreviation: "IN"},
-    {state:"Iowa", abbreviation: "IA"},
-    {state:"Kansas", abbreviation: "KS"},
-    {state:"Kentucky", abbreviation: "KY"},
-    {state:"Louisiana", abbreviation: "LA"},
-    {state:"Maine", abbreviation: "ME"},
-    {state:"Maryland", abbreviation: "MD"},
-    {state:"Massachusetts", abbreviation: "MA"},
-    {state:"Michigan", abbreviation: "MI"},
-    {state:"Minnesota", abbreviation: "MN"},
-    {state:"Mississippi", abbreviation: "MS"},
-    {state:"Missouri", abbreviation: "MO"},
-    {state:"Montana", abbreviation: "MT"},
-    {state:"Nebraska", abbreviation: "NE"},
-    {state:"Nevada", abbreviation: "NV"},
-    {state:"New Hampshire", abbreviation: "NH"},
-    {state:"New Jersey", abbreviation: "NJ"},
-    {state:"New Mexico", abbreviation: "NM"},
-    {state:"New York", abbreviation: "NY"},
-    {state:"North Carolina", abbreviation: "NC"},
-    {state:"North Dakota", abbreviation: "ND"},
-    {state:"Ohio", abbreviation: "OH"},
-    {state:"Oklahoma", abbreviation: "OK"},
-    {state:"Oregon", abbreviation: "OR"},
-    {state:"Pennsylvania", abbreviation: "PA"},
-    {state:"Rhode Island", abbreviation: "RI"},
-    {state:"South Carolina", abbreviation: "SC"},
-    {state:"South Dakota", abbreviation: "SD"},
-    {state:"Tennessee", abbreviation: "TN"},
-    {state:"Texas", abbreviation: "TX"},
-    {state:"Utah", abbreviation: "UT"},
-    {state:"Vermont", abbreviation: "VT"},
-    {state:"Virginia", abbreviation: "VA"},
-    {state:"Washington", abbreviation: "WA"},
-    {state:"West Virginia", abbreviation: "WV"},
-    {state:"Wisconsin", abbreviation: "WI"},
-    {state:"Wyoming", abbreviation: "WY"},
-]
+const stateInfo = {
+    "AL": {state:"Alabama", data: []},
+    "AK": {state:"Alaska", data: []},
+    "AZ": {state:"Arizona", data: []},
+    "AR": {state:"Arkansas", data: []},
+    "CA": {state:"California", data: []},
+    "CO": {state:"Colorado", data: []},
+    "CT": {state:"Connecticut", data: []},
+    "DE": {state:"Delaware", data: []},
+    "FL": {state:"Florida", data: []},
+    "GA": {state:"Georgia", data: []},
+    "HI": {state:"Hawaii", data: []},
+    "ID": {state:"Idaho", data: []},
+    "IL": {state:"Illinois", data: []},
+    "IN": {state:"Indiana", data: []},
+    "IA": {state:"Iowa", data: []},
+    "KS": {state:"Kansas", data: []},
+    "KY": {state:"Kentucky", data: []},
+    "LA": {state:"Louisiana", data: []},
+    "ME": {state:"Maine", data: []},
+    "MD": {state:"Maryland", data: []},
+    "MA": {state:"Massachusetts", data: []},
+    "MI": {state:"Michigan", data: []},
+    "MN": {state:"Minnesota", data: []},
+    "MS": {state:"Mississippi", data: []},
+    "MO": {state:"Missouri", data: []},
+    "MT": {state:"Montana", data: []},
+    "NE": {state:"Nebraska", data: []},
+    "NV": {state:"Nevada", data: []},
+    "NH": {state:"New Hampshire", data: []},
+    "NJ": {state:"New Jersey", data: []},
+    "NM": {state:"New Mexico", data: []},
+    "NY": {state:"New York", data: []},
+    "NC": {state:"North Carolina", data: []},
+    "ND": {state:"North Dakota", data: []},
+    "OH": {state:"Ohio", data: []},
+    "OK": {state:"Oklahoma", data: []},
+    "OR": {state:"Oregon", data: []},
+    "PA": {state:"Pennsylvania", data: []},
+    "RI": {state:"Rhode Island", data: []},
+    "SC": {state:"South Carolina", data: []},
+    "SD": {state:"South Dakota", data: []},
+    "TN": {state:"Tennessee", data: []},
+    "TX": {state:"Texas", data: []},
+    "UT": {state:"Utah", data: []},
+    "VT": {state:"Vermont", data: []},
+    "VA": {state:"Virginia", data: []},
+    "WA": {state:"Washington", data: []},
+    "WV": {state:"West Virginia", data: []},
+    "WI": {state:"Wisconsin", data: []},
+    "WY": {state:"Wyoming", data: []},
+}
+const stateMapping = {
+    "Alabama": stateInfo["AL"],
+    "Alaska": stateInfo["AK"],
+    "Arizona": stateInfo["AZ"],
+    "Arkansas": stateInfo["AR"],
+    "California": stateInfo["CA"],
+    "Colorado": stateInfo["CO"],
+    "Connecticut": stateInfo["CT"],
+    "Delaware": stateInfo["DE"],
+    "Florida": stateInfo["FL"],
+    "Georgia": stateInfo["GA"],
+    "Hawaii": stateInfo["HI"],
+    "Idaho": stateInfo["ID"],
+    "Illinois": stateInfo["IL"],
+    "Indiana": stateInfo["IN"],
+    "Iowa": stateInfo["IA"],
+    "Kansas": stateInfo["KS"],
+    "Kentucky": stateInfo["KY"],
+    "Louisiana": stateInfo["LA"],
+    "Maine": stateInfo["ME"],
+    "Maryland": stateInfo["MD"],
+    "Massachusetts": stateInfo["MA"],
+    "Michigan": stateInfo["MI"],
+    "Minnesota": stateInfo["MN"],
+    "Mississippi": stateInfo["MS"],
+    "Missouri": stateInfo["MO"],
+    "Montana": stateInfo["MT"],
+    "Nebraska": stateInfo["NE"],
+    "Nevada": stateInfo["NV"],
+    "New Hampshire": stateInfo["NH"],
+    "New Jersey": stateInfo["NJ"],
+    "New Mexico": stateInfo["NM"],
+    "New York": stateInfo["NY"],
+    "North Carolina": stateInfo["NC"],
+    "North Dakota": stateInfo["ND"],
+    "Ohio": stateInfo["OH"],
+    "Oklahoma": stateInfo["OK"],
+    "Oregon": stateInfo["OR"],
+    "Pennsylvania": stateInfo["PA"],
+    "Rhode Island": stateInfo["RI"],
+    "South Carolina": stateInfo["SC"],
+    "South Dakota": stateInfo["SD"],
+    "Tennessee": stateInfo["TN"],
+    "Texas": stateInfo["TX"],
+    "Utah": stateInfo["UT"],
+    "Vermont": stateInfo["VT"],
+    "Virginia": stateInfo["VA"],
+    "Washington": stateInfo["WA"],
+    "West Virginia": stateInfo["WV"],
+    "Wisconsin": stateInfo["WI"],
+    "Wyoming": stateInfo["WY"],
+}
 const filterArray = [
-    {filter:'positive', name:'Total Positive'},
+    {filter:'positive', name:'Total Positive Tests'},
     {filter:'positiveIncrease', name:'Positive Increase From Previous Day'},
+    {filter:'negative', name:'Total Negative Tests'},
+    {filter:'negativeIncrease', name:'Negative Increase From Previous Day'},
+    {filter:'recovered', name:'Total Recovered'},
+    {filter:'current', name:'Current Cases (if state has recovered count)'},
     {filter:'death', name:'Total Deaths'},
-    {filter:'deathIncrease', name:'Total Death Increase From Previous Day'}
+    {filter:'deathIncrease', name:'Total Death Increase From Previous Day'},
+    {filter:'hospitalizedCurrently', name:'Total Currently Hospitalized'},
+    {filter:'onVentilatorCurrently', name:'Total Currently On Ventilators'},
 ]
-stateArray.forEach(x => {
-    const option = `<option value=${x.abbreviation}>${x.state}</option>`
+/* State selector */
+Object.keys(stateInfo).forEach(x => {
+    const option = `<option value=${x}>${stateInfo[x].state}</option>`
     document.querySelector('#selectState').innerHTML += option
 })
+
+/* Filter selector */
 filterArray.forEach(x => {
-    const option = `<option value=${x.filter}>${x.name}</option>`
-    document.querySelector('#selectFilter').innerHTML += option
+    const option = `<option value=${x.filter}>${x.name}</option>`;
+    document.querySelector('#selectFilter').innerHTML += option;
 })
 
 var covidData;
 
 localStorage.stateName ? localStorage.stateName : localStorage.stateName="PA";
-// localStorage.filterName ? localStorage.filterName : localStorage.filterName="positive";
 var filterName = "positive"
 
 document.querySelector('#selectState').value = localStorage.stateName;
 document.querySelector('#selectFilter').value = filterName;
 
 
-const getLargest = (set) => {
+const getLargest = (data, set) => {
     let arr = []
-    covidData.forEach(day => { if (!isNaN(day[set])) arr.push(day[set]) })
+    data.forEach(day => { if (!isNaN(day[set])) arr.push(day[set]) })
     return Math.max.apply(Math, arr)
 }
 
-fetchData(localStorage.stateName)
-function fetchData(state) {
-    fetch(`https://covidtracking.com/api/states/daily?state=${state}`).then(res => res.json()).then((data) => {
-        return data
-    }).then((data) => {
-        console.log(data)
-        covidData = data;
-        buildGraph(filterName)
+fetch(`https://covidtracking.com/api/v1/states/current.json`).then(res => res.json()).then((data) => {
+    data.forEach(state => {
+        if (stateInfo[state.state]) stateInfo[state.state].totalPositive = state.positive
     })
+})
+
+function fetchData(state) {
+    stateInfo[state].data.forEach(day => day.current = day.positive - day.recovered - day.death)
+    covidData = stateInfo[state].data
+    buildGraph(filterName)
 }
 
+fetch(`https://datausa.io/api/data?drilldowns=State&measures=Population&year=latest`).then(res => res.json()).then((data) => {
+    data.data.forEach(state => {
+        if (stateMapping[state.State]) stateMapping[state.State].population = state.Population
+    })
+})
+function fetchPopulations() {
+}
+
+/* in work */
+function fetchEachStates(state) {
+    return fetch(`https://covidtracking.com/api/states/daily?state=${state}`).then(res => res.json()).then((data) => {
+        stateInfo[state].data = data;
+        return data
+    })
+}
+fetch(`https://covidtracking.com/api/states/daily`).then(res => res.json()).then((data) => {
+    data.forEach(item => {
+        if (stateInfo[item.state]) stateInfo[item.state].data.push(item)
+    })
+    fetchData(localStorage.stateName)
+})
+
+
 document.querySelector("#selectState").onchange = (e) => {
-    let abr = localStorage.stateName = e.target.value;
-    fetchData(abr)
+    if (e.target.value == 'top-ten') {
+        filterStates(filterName)
+    } else {
+        let abr = localStorage.stateName = e.target.value;
+        fetchData(abr)
+    }
 }
 
 document.querySelector("#selectFilter").onchange = (e) => {
-    console.log(e)
     document.querySelector("#filter").innerHTML = e.target.selectedOptions[0].label
-    buildGraph(e.target.value)
+    if (document.querySelector("#selectState").value == 'top-ten') {
+        filterStates(e.target.value)
+    } else {
+        buildGraph(e.target.value)
+    }
 }
 
-document.querySelectorAll("button").forEach(button => {
-    button.onclick = (e) => {
-        document.querySelector("#filter").innerHTML = e.target.innerHTML;
-        buildGraph(e.target.dataset.filter)
+window.addEventListener('resize', () => {
+    if (document.querySelector("#selectState").value == 'top-ten') {
+        filterStates(filterName)
+    } else {
+        buildGraph(filterName)
     }
 })
 
-window.addEventListener('resize', () => {
-    buildGraph(filterName)
-})
-
-function buildGraph(set) {
-    filterName = set;
-    var largest = getLargest(set);
-    var width = document.querySelector("#chart").clientWidth - 150;
+function buildGraph(filter) {
+    filterName = filter;
+    var largest = getLargest(covidData, filter);
+    var width = document.querySelector("#chart").clientWidth - 155;
     var html = "<b><span>Date</span>–––– <span>Totals</span></b>"
     covidData.map(day => {
-        console.log(day)
-        if (isNaN(day[set])) day[set] = ''
+        if (isNaN(day[filter])) day[filter] = ''
         const bar = `
         <div>
             <span>${day.date.toString().substr(4,2)}/${day.date.toString().substr(6,2)}/${day.date.toString().substr(0,4)}</span>
-            <span>${day[set]}</span>
-            <div class="bar" style="width:${width/largest*day[set]}px"></div>
+            <span>${day[filter]}</span>
+            <div class="bar" style="width:${width/largest*day[filter]}px"></div>
             </div>`
         html += bar
     })
     document.querySelector("#chart").innerHTML = html
+}
+
+document.querySelector('#top10').onclick = () => {
+    document.querySelector("#selectState").value = 'top-ten'
+    filterStates(filterName)
+}
+
+var statesInOrder;
+function filterStates(filter) {
+    filterName = filter;
+    statesInOrder = [];
+    var allStates = []
+    var largestForEachState = []
+    Object.keys(stateInfo).forEach(state => {
+        allStates.push(state)
+        let arr = stateInfo[state].data;
+        let lg = getLargest(arr, filterName);
+        lg = lg / stateInfo[state].population * 1000000
+        largestForEachState.push(lg)
+    })
+    var largest = Math.max.apply(Math, largestForEachState)
+    while (statesInOrder.length < 10) {
+        let largest = Math.max.apply(Math, largestForEachState)
+        let index = largestForEachState.indexOf(largest)
+        statesInOrder.push(allStates[index])
+        allStates.splice(index,1)
+        largestForEachState.splice(index,1)
+    }
+    topTenGraph(largest)
+}
+
+function topTenGraph(largest) {
+    document.querySelector("#chart").innerHTML = '<p>Top 10 Filtered by Cases / Million</p>'
+    var width = document.querySelector("#chart").clientWidth - 55;
+    statesInOrder.forEach(state => {
+        var casePerM = getLargest(stateInfo[state].data, filterName) / stateInfo[state].population * 1000000
+        var graph = ''
+        stateInfo[state].data.forEach(day => {
+            let cpm = day[filterName] / stateInfo[state].population  * 1000000;
+            let totalWidth = width / largest * cpm;
+            totalWidth = (totalWidth > 0) ? totalWidth : 0;
+            graph += `<div class="top-ten-bar"><span>${Math.round(cpm)}</span><div style="width:${totalWidth}px"></div></div>`
+        })
+        const box = `
+        <div>
+            <h3>${stateInfo[state].state} – ${Math.round(casePerM)} / million</h3>
+            <div>
+                ${graph}
+            </div>
+        </div>
+        `
+        document.querySelector("#chart").innerHTML += box
+    })
 }

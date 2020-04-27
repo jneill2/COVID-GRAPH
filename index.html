@@ -5,22 +5,23 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui"
         charset="utf-8">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="apple-mobile-web-app-title" content="COVID-19">
     <link rel="stylesheet" href="index.css">
 </head>
 
 <body>
     <div id="heading">
         <span>COVID-19</span>
-        <select id="selectState"></select>
+        <select id="selectState"><option value="top-ten">Top Ten</option></select>
+        <button id="top10">Top Ten</button>
         <select id="selectFilter"></select>
-        <button data-filter=positive>Total Positive</button>
-        <button data-filter=positiveIncrease>Positive Increase Per Day</button>
-        <button data-filter=death>Total Deaths</button>
-        <button data-filter=deathIncrease>Total Death Increase Per Day</button>
     </div>
     <h2 id="filter">Total Positive</h2>
-    <div id="chart"></div>
-    <div id="footer">Data from <a href="https://covidtracking.com/api">covidtracker.com</a></div>
+    <p id="note"></p>
+    <div id="chart"><p>Loading current data...</p></div>
+    <div id="footer">Data from <a href="https://covidtracking.com/api">The COVID Tracking Project.</a></div>
 </body>
 <script src="index.js"></script>
 </html>
