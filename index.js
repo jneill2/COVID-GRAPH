@@ -159,7 +159,7 @@ fetch(`https://datausa.io/api/data?drilldowns=State&measures=Population&year=lat
 })
 
 
-fetch(`https://covidtracking.com/api/states/daily`).then(res => res.json()).then((data) => {
+fetch(`https://covidtracking.com/api/v1/states/daily.json`).then(res => res.json()).then((data) => {
     data.forEach(item => {
         if (stateInfo[item.state]) stateInfo[item.state].data.push(item)
     })
@@ -203,7 +203,7 @@ function buildGraph(filter) {
     filterName = filter;
     var largest = getLargest(covidData, filter);
     var width = document.querySelector("#chart").clientWidth - 155;
-    var html = "<b><span>Date</span>–––– <span>Totals</span></b>"
+    var html = "<b><span>Date</span>–– <span>Totals</span></b>"
     covidData.map(day => {
         if (isNaN(day[filter])) day[filter] = ''
         const bar = `
@@ -248,7 +248,7 @@ function filterStates(filter) {
         statesInOrder.push(allStates[index])
         allStates.splice(index,1)
         recentForEachState.splice(index,1)
-        console.log(statesInOrder)
+        // console.log(statesInOrder)
     }
     topTenGraph(largest)
 }
@@ -257,7 +257,7 @@ function topTenGraph(largest) {
     document.querySelector("#chart").innerHTML = '<p>Top 10 Filtered by Current Cases / Million</p>'
     var width = document.querySelector("#chart").clientWidth - 55;
     statesInOrder.forEach(state => {
-        var casePerM = getLargest(stateInfo[state].data, filterName) / stateInfo[state].population * 1000000
+        // var casePerM = getLargest(stateInfo[state].data, filterName) / stateInfo[state].population * 1000000
         var graph = ''
         stateInfo[state].data.forEach(day => {
             let cpm = day[filterName] / stateInfo[state].population  * 1000000;
@@ -268,7 +268,7 @@ function topTenGraph(largest) {
         })
         const box = `
         <div>
-            <h3>${stateInfo[state].state} (cases / million)</h3>
+            <h3><a onclick="jumpToState('${state}')">${stateInfo[state].state} (cases / million)</a></h3>
             <div>
                 ${graph}
             </div>
@@ -276,4 +276,10 @@ function topTenGraph(largest) {
         `
         document.querySelector("#chart").innerHTML += box
     })
+}
+
+function jumpToState(state) {
+    document.querySelector("#selectState").value = (state);
+    buildGraph(filterName)
+    window.scrollTo(0,0);
 }

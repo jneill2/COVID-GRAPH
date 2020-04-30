@@ -33,6 +33,9 @@ h2 {
     margin: 0 3 5 0;
     min-width:50px;
 }
+#chart b span {
+    margin-left: 2px;
+}
 #chart div.bar {
     margin-left: 10px;
     display: inline-block;
@@ -50,6 +53,11 @@ h2 {
 #chart div.top-ten-bar span {
     font-size: x-small;
     margin: 0px;
+}
+#chart h3 a {
+    cursor: pointer;
+    color: blue;
+    text-decoration: underline;
 }
 #footer {
     text-align: center;
