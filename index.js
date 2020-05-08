@@ -103,10 +103,10 @@ const stateMapping = {
     "Wyoming": stateInfo["WY"],
 }
 const filterArray = [
-    {filter:'positive', name:'Total Positive Tests'},
     {filter:'positiveIncrease', name:'Positive Increase From Previous Day'},
-    {filter:'negative', name:'Total Negative Tests'},
+    {filter:'positive', name:'Total Positive Tests'},
     {filter:'negativeIncrease', name:'Negative Increase From Previous Day'},
+    {filter:'negative', name:'Total Negative Tests'},
     {filter:'recovered', name:'Total Recovered'},
     {filter:'current', name:'Current Cases (if state has recovered count)'},
     {filter:'death', name:'Total Deaths'},
@@ -128,11 +128,12 @@ filterArray.forEach(x => {
 
 var covidData;
 
-localStorage.stateName ? localStorage.stateName : localStorage.stateName="PA";
-var filterName = "positive"
+localStorage.stateName ? localStorage.stateName : localStorage.stateName="top-ten";
+localStorage.filterName ? localStorage.filterName : localStorage.filterName="positiveIncrease";
+// var localStorage.filterName = "positiveIncrease"
 
 document.querySelector('#selectState').value = localStorage.stateName;
-document.querySelector('#selectFilter').value = filterName;
+document.querySelector('#selectFilter').value = localStorage.filterName;
 
 
 const getLargest = (data, set) => {
@@ -141,42 +142,49 @@ const getLargest = (data, set) => {
     return Math.max.apply(Math, arr)
 }
 
-fetch(`https://covidtracking.com/api/v1/states/current.json`).then(res => res.json()).then((data) => {
-    data.forEach(state => {
-        if (stateInfo[state.state]) stateInfo[state.state].totalPositive = state.positive
-    })
-})
-
 function fetchData(state) {
     covidData = stateInfo[state].data
-    buildGraph(filterName)
+    buildGraph(localStorage.filterName)
 }
 
-fetch(`https://datausa.io/api/data?drilldowns=State&measures=Population&year=latest`).then(res => res.json()).then((data) => {
-    data.data.forEach(state => {
-        if (stateMapping[state.State]) stateMapping[state.State].population = state.Population
-    })
-})
-
-
-fetch(`https://covidtracking.com/api/v1/states/daily.json`).then(res => res.json()).then((data) => {
-    data.forEach(item => {
-        if (stateInfo[item.state]) stateInfo[item.state].data.push(item)
-    })
-    Object.keys(stateInfo).forEach(state => {
-        stateInfo[state].data.forEach(day => {
-            day.current = day.positive - day.death - day.recovered
+fetchAllData()
+function fetchAllData() {
+    fetch(`https://covidtracking.com/api/v1/states/current.json`).then(res => res.json()).then((data) => {
+        data.forEach(state => {
+            if (stateInfo[state.state]) stateInfo[state.state].totalPositive = state.positive
         })
     })
-    fetchData(localStorage.stateName)
-})
+    
+    fetch(`https://datausa.io/api/data?drilldowns=State&measures=Population&year=latest`).then(res => res.json()).then((data) => {
+        data.data.forEach(state => {
+            if (stateMapping[state.State]) stateMapping[state.State].population = state.Population
+        })
+    })
+    
+    fetch(`https://covidtracking.com/api/v1/states/daily.json`).then(res => res.json()).then((data) => {
+        data.forEach(item => {
+            if (stateInfo[item.state]) stateInfo[item.state].data.push(item)
+        })
+        Object.keys(stateInfo).forEach(state => {
+            stateInfo[state].data.forEach(day => {
+                day.current = day.positive - day.death - day.recovered
+            })
+        })
+        if (localStorage.stateName == "top-ten") { 
+            filterStates(localStorage.filterName) 
+        } else { 
+            fetchData(localStorage.stateName) 
+        }
+    })
+}
 
 
 document.querySelector("#selectState").onchange = (e) => {
+    localStorage.stateName = e.target.value;
     if (e.target.value == 'top-ten') {
-        filterStates(filterName)
+        filterStates(localStorage.filterName)
     } else {
-        let abr = localStorage.stateName = e.target.value;
+        let abr = e.target.value;
         fetchData(abr)
     }
 }
@@ -191,16 +199,16 @@ document.querySelector("#selectFilter").onchange = (e) => {
 }
 
 window.addEventListener('resize', () => {
-    if (!covidData) return
     if (document.querySelector("#selectState").value == 'top-ten') {
-        filterStates(filterName)
+        filterStates(localStorage.filterName)
     } else {
-        buildGraph(filterName)
+        if (!covidData) return
+        buildGraph(localStorage.filterName)
     }
 })
 
 function buildGraph(filter) {
-    filterName = filter;
+    localStorage.filterName = filter;
     var largest = getLargest(covidData, filter);
     var width = document.querySelector("#chart").clientWidth - 155;
     var html = "<b><span>Date</span>–– <span>Totals</span></b>"
@@ -218,13 +226,14 @@ function buildGraph(filter) {
 }
 
 document.querySelector('#top10').onclick = () => {
+    localStorage.stateName = "top-ten"
     document.querySelector("#selectState").value = 'top-ten'
-    filterStates(filterName)
+    filterStates(localStorage.filterName)
 }
 
 var statesInOrder;
 function filterStates(filter) {
-    filterName = filter;
+    localStorage.filterName = filter;
     statesInOrder = [];
     var allStates = []
     var largestForEachState = []
@@ -233,11 +242,11 @@ function filterStates(filter) {
         // console.log(stateInfo[state].data, state)
         allStates.push(state)
         let arr = stateInfo[state].data;
-        let lg = getLargest(arr, filterName);
+        let lg = getLargest(arr, filter);
         lg = lg / stateInfo[state].population * 1000000
         largestForEachState.push(lg)
 
-        let recent = stateInfo[state].data[0][filterName];
+        let recent = stateInfo[state].data[0][filter];
         let number = recent / stateInfo[state].population * 1000000
         recentForEachState.push(number)
     })
@@ -257,10 +266,10 @@ function topTenGraph(largest) {
     document.querySelector("#chart").innerHTML = '<p>Top 10 Filtered by Current Cases / Million</p>'
     var width = document.querySelector("#chart").clientWidth - 55;
     statesInOrder.forEach(state => {
-        // var casePerM = getLargest(stateInfo[state].data, filterName) / stateInfo[state].population * 1000000
+        // var casePerM = getLargest(stateInfo[state].data, localStorage.filterName) / stateInfo[state].population * 1000000
         var graph = ''
         stateInfo[state].data.forEach(day => {
-            let cpm = day[filterName] / stateInfo[state].population  * 1000000;
+            let cpm = day[localStorage.filterName] / stateInfo[state].population  * 1000000;
             let totalWidth = width / largest * cpm;
             totalWidth = (totalWidth > 0) ? totalWidth : 0;
             cpm = (!isNaN(cpm)) ? cpm : 0;
@@ -280,6 +289,6 @@ function topTenGraph(largest) {
 
 function jumpToState(state) {
     document.querySelector("#selectState").value = (state);
-    buildGraph(filterName)
+    buildGraph(localStorage.filterName)
     window.scrollTo(0,0);
 }

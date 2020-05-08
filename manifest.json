@@ -1,0 +1,14 @@
+{
+    "short_name": "COVID-19",
+    "name": "COVID-19",
+    "icons": [
+        {
+            "src": "https://jneill2.github.io/COVID-GRAPH/COVID-512.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        }
+    ],
+    "start_url": "https://jneill2.github.io/COVID-GRAPH/",
+    "background_color": "#FFFFFF",
+    "display": "standalone"
+}
