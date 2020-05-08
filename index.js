@@ -124,6 +124,7 @@ Object.keys(stateInfo).forEach(x => {
 filterArray.forEach(x => {
     const option = `<option value=${x.filter}>${x.name}</option>`;
     document.querySelector('#selectFilter').innerHTML += option;
+    if (x.filter == localStorage.filterName) document.querySelector("#filter").innerHTML = x.name
 })
 
 var covidData;
@@ -134,7 +135,6 @@ localStorage.filterName ? localStorage.filterName : localStorage.filterName="pos
 
 document.querySelector('#selectState').value = localStorage.stateName;
 document.querySelector('#selectFilter').value = localStorage.filterName;
-
 
 const getLargest = (data, set) => {
     let arr = []
@@ -149,6 +149,7 @@ function fetchData(state) {
 
 fetchAllData()
 function fetchAllData() {
+    console.log('fetched')
     fetch(`https://covidtracking.com/api/v1/states/current.json`).then(res => res.json()).then((data) => {
         data.forEach(state => {
             if (stateInfo[state.state]) stateInfo[state.state].totalPositive = state.positive
