@@ -290,6 +290,7 @@ function topTenGraph(largest) {
 
 function jumpToState(state) {
     document.querySelector("#selectState").value = (state);
-    buildGraph(localStorage.filterName)
+    fetchData(state)
+    // buildGraph(localStorage.filterName)
     window.scrollTo(0,0);
 }

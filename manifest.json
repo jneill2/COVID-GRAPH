@@ -3,7 +3,7 @@
     "name": "COVID-19",
     "icons": [
         {
-            "src": "https://jneill2.github.io/COVID-GRAPH/COVID-512.png",
+            "src": "https://jneill2.github.io/COVID-GRAPH/icons/COVID-512.png",
             "type": "image/png",
             "sizes": "512x512"
         }

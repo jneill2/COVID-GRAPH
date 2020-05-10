@@ -1,0 +1,66 @@
+<!-- <html>
+    <style>
+        div {position: absolute; top: 40px; left: 200px;/*border:18px solid #4486f0;*/ border:25px solid darkred; /*background-color: #4486f0;*/ width: 256px; height: 256px; border-radius: 85px; } /* radius 25px for sq;  */
+        img {width: 220px;  height: 220px; padding: 19px; /*border-radius: 35px*/ border-radius: 90px;} /* radius 35px for sq; */
+    </style>
+    <body>
+        <div>
+            <img src="stationery-stacked-papers-java bean.png">
+        </div>
+    </body>
+</html> -->
+<html>
+    <style>
+    /* 
+        **  RADIUS CALCULATION for iOS  **
+        *   icon length / 6.4
+        *   e.g. 512 / 6.4 = 80
+    */
+    /* 
+        **  iOS leave #border square
+        **  Android round #border
+    */
+        body {
+            background-color: transparent;
+        }
+        div#border {
+            position: fixed;
+            top: 100px;
+            left:300px;
+            width:120px;
+            height: 120px;
+            /* background-color: blueviolet; */
+            /* border-radius: 19px; */
+        }
+        div#bg {
+            position: fixed;
+            top: 115px;
+            left: 315px;
+            height: 90px;
+            width: 90px;
+            background-color: white;
+            border-radius: 15px;
+            text-align: center;
+        }
+        img {
+            position: fixed;
+            top: 120px;
+            left: 320px;
+            height: 80px;
+            width: 80px;
+        }
+        span.material-icons, #text {
+            font-size: 50pt;
+        }
+        #text {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+    </style>
+    <body>
+        <div id="border">
+            <div id="bg">
+            </div>
+        </div>
+        <img src="covid_photo.png">
+    </body>
+</html>
