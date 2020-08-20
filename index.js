@@ -150,7 +150,7 @@ function fetchData(state) {
 fetchAllData()
 function fetchAllData() {
     console.log('fetched')
-    fetch(`https://covidtracking.com/api/v1/states/current.json`).then(res => res.json()).then((data) => {
+    fetch(`https://api.covidtracking.com/v1/states/current.json`).then(res => res.json()).then((data) => {
         data.forEach(state => {
             if (stateInfo[state.state]) stateInfo[state.state].totalPositive = state.positive
         })
@@ -162,7 +162,7 @@ function fetchAllData() {
         })
     })
     
-    fetch(`https://covidtracking.com/api/v1/states/daily.json`).then(res => res.json()).then((data) => {
+    fetch(`https://api.covidtracking.com/v1/states/daily.json`).then(res => res.json()).then((data) => {
         data.forEach(item => {
             if (stateInfo[item.state]) stateInfo[item.state].data.push(item)
         })
